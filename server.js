@@ -5,4 +5,4 @@ app.use(express.static(__dirname + '/dist/melody-composer-by-gpt'));
 app.get('/*', function(req,res) {
 res.sendFile(path.join(__dirname+
 '/dist/melody-composer-by-gpt/index.html'));});
-app.listen(process.env.PORT || 30000);
+app.listen(process.env.PORT || 3000);
