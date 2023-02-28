@@ -1,0 +1,199 @@
+<mat-accordion multi>
+  <mat-expansion-panel [expanded]="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Model and Prompt </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form [formGroup]="modelForm">
+      <as-split direction="horizontal">
+        <as-split-area [size]="50">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Model options </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-label>Model</mat-label>
+              <mat-form-field appearance="legacy">
+                <mat-select formControlName="model">
+                  <mat-option
+                    *ngFor="let model of modelChoices"
+                    [value]="model"
+                    >{{ model }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <mat-label>Temperature</mat-label>
+              <mat-form-field appearance="legacy">
+                <input
+                  type="number"
+                  matInput
+                  formControlName="temperature"
+                  min="0"
+                  max="1"
+                  step=".01"
+                />
+              </mat-form-field>
+
+              <mat-label>Max-token</mat-label>
+              <mat-form-field appearance="legacy">
+                <input
+                  type="number"
+                  matInput
+                  formControlName="max_tokens"
+                  min="50"
+                  max="200"
+                  step="1"
+                />
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Description</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="fill">
+                <mat-label>Melody mood</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  formControlName="melody_mood"
+                  [ngModel]="melodyMood"
+                  (ngModelChange)="formFieldChange($event, 'melodyMood')"
+                >
+                </textarea>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Melody genre</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  formControlName="melody_genre"
+                  [ngModel]="melodyGenre"
+                  (ngModelChange)="formFieldChange($event, 'melodyGenre')"
+                >
+                </textarea>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Movie title</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  formControlName="movie_tile"
+                  [ngModel]="movieTitle"
+                  (ngModelChange)="formFieldChange($event, 'movieTitle')"
+                >
+                </textarea>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Movie genre</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  formControlName="movie_genre"
+                  [ngModel]="movieGenre"
+                  (ngModelChange)="formFieldChange($event, 'movieGenre')"
+                >
+                </textarea>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label>The scene</mat-label>
+                <textarea
+                  matInput
+                  cdkTextareaAutosize
+                  formControlName="scene"
+                  [ngModel]="scene"
+                  (ngModelChange)="formFieldChange($event, 'scene')"
+                >
+                </textarea>
+              </mat-form-field>
+
+              <button
+                class="button"
+                mat-button
+                color="accent"
+                type="submit"
+                (click)="get_random_scene()"
+              >
+                Get a random description
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </as-split-area>
+        <as-split-area [size]="50">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Prompt</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="fill">
+                <mat-label> Prompt instruction </mat-label>
+                <textarea
+                  cdkTextareaAutosize
+                  matInput
+                  formControlName="prompt_instruction"
+                  [ngModel]="promptInstruction"
+                  (ngModelChange)="formFieldChange($event, 'promptInstruction')"
+                >
+  {{ promptInstruction }} </textarea
+                >
+              </mat-form-field>
+
+              <mat-form-field appearance="fill">
+                <mat-label> Final prompt </mat-label>
+                <textarea
+                  cdkTextareaAutosize
+                  matInput
+                  formControlName="prompt"
+                  [ngModel]="prompt"
+                >
+ {{ prompt }} </textarea
+                >
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>OpenAI API key</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-form-field appearance="fill">
+                <mat-label> key </mat-label>
+                <input
+                  matInput
+                  [type]="hide ? 'password' : 'text'"
+                  formControlName="openai_Key"
+                  required
+                />
+                <mat-icon matSuffix (click)="hide = !hide">{{
+                  hide ? "visibility_off" : "visibility"
+                }}</mat-icon>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+
+          <button
+            class="button"
+            mat-button
+            color="accent"
+            type="submit"
+            [disabled]="modelForm.invalid"
+            (click)="onSubmit(modelForm)"
+          >
+            Generate melody
+          </button>
+          <mat-progress-bar
+            *ngIf="isWait"
+            color="accent"
+            mode="query"
+          ></mat-progress-bar>
+        </as-split-area>
+      </as-split>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

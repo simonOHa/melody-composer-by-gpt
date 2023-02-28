@@ -1,0 +1,45 @@
+<mat-accordion multi>
+  <mat-expansion-panel [expanded]="true" hideToggle>
+    <mat-expansion-panel-header>
+      <mat-panel-title> ABC Music editior and player </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Melody</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <textarea
+            appearance="fill"
+            matInput
+            id="abc"
+            cdkTextareaAutosize
+            spellcheck="false"
+            [value]="abcString"
+            (input)="onValueChange($event)"
+          >
+          </textarea>
+        </mat-form-field>
+        <button
+          class="button"
+          mat-button
+          color="accent"
+          type="submit"
+          (click)="get_random_melody()"
+        >
+          Get a random melody
+        </button>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Player</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div id="paper"></div>
+        <div id="audio"></div>
+      </mat-card-content>
+    </mat-card>
+  </mat-expansion-panel>
+</mat-accordion>
